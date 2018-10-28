@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour {
 
-	[SerializeField] private float speed;
 	private Vector2 target;
+	[SerializeField] private float speed;
+	[SerializeField] private GameObject destroyedFX;
 
 	void Start(){
 		// Set the target equal to the mousePosition
@@ -15,5 +16,10 @@ public class Projectile : MonoBehaviour {
 	void Update(){
 		// Move the projectile towards the target
 		transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
+		// If the projectile reaches it's target position, destroy
+		if (Vector2.Distance(transform.position, target) < 0.2f){
+			// Instantiate a particle effect
+			Destroy (gameObject);
+		}
 	}
 }
