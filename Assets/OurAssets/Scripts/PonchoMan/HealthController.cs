@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class HealthController : MonoBehaviour {
 
+	private SpriteRenderer rend;
+
+	[Header("UI Variables")]
 	[SerializeField] private int health;
 	[SerializeField] private int numOfHearts;
 
@@ -12,7 +15,25 @@ public class HealthController : MonoBehaviour {
 	[SerializeField] private Sprite fullHeart;
 	[SerializeField] private Sprite emptyHeart;
 
+	#region Blinking
+	[Header("Blinking Variables")]
+	[SerializeField] private float blinkingTimer = 0.0f;
+	[SerializeField] private float blinkingMinDuration = 0.1f;
+	[SerializeField] private float blinkingTotalTimer = 0.0f;
+	[SerializeField] private float blinkingTotalDuration = 1.0f;
+	[SerializeField] private bool startBlinking = false;
+	#endregion
+
+	void Start(){
+		rend = GetComponent<SpriteRenderer> ();
+	}
+
 	void Update(){
+
+		// If the startBlinking Bool is equal to true, call the BlinkingEffect function
+//		if (startBlinking){
+//			BlinkingEffect ();
+//		}
 
 		// If the player's health is greater than the numOfHearts
 		if (health > numOfHearts) {
@@ -48,9 +69,34 @@ public class HealthController : MonoBehaviour {
 
 	public void TakeDamage(int damagedAmount){
 
+		// Set the startBlinking bool equal to true
+		startBlinking = true;
 		// Subtract the damagedAmount from the health amount
 		health -= damagedAmount;
 	}
+
+//	void BlinkingEffect(){
+//		blinkingTimer += Time.deltaTime;
+//
+//		if (blinkingTotalTimer >= blinkingTotalDuration) {
+//			startBlinking = false;
+//			blinkingTotalTimer = 0.0f;
+//
+//			rend.enabled = true;
+//			return;
+//		}
+//
+//		blinkingTimer += Time.deltaTime;
+//		if (blinkingTimer >= blinkingMinDuration) {
+//			blinkingTimer = 0.0f;
+//
+//			if (rend.enabled == true) {
+//				rend.enabled = false;
+//			} else {
+//				rend.enabled = true;
+//			}
+//		}
+//	}
 
 	void PlayerDead (){
 		Debug.Log ("Poncho-Man is dead... Game Over...");
